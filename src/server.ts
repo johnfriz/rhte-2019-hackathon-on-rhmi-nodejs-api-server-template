@@ -3,13 +3,18 @@ import * as env from 'env-var';
 import log from './log';
 import * as swaggerUi from 'swagger-ui-express';
 import junctionsRoute from './routes/junctions';
+const YAML = require('yamljs');
+import { resolve } from 'path';
 
 let swaggerJson;
 try {
-  swaggerJson = require('../openapi-spec.json');
+  swaggerJson = YAML.load(resolve(__dirname, '../open-apispec.yaml'));
+
+  //swaggerJson = require('../open-apispec.json');
 } catch (e) {
   console.error(
-    '\nERROR: please add your openapi-spec.json file to the root of the project\n'
+    '\nERROR: please add your openapi-spec.json file to the root of the project\n',
+    e
   );
   process.exit(1);
 }
